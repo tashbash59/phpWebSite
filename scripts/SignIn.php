@@ -23,7 +23,8 @@
 						$_SESSION["username"] = $row[2];
 						$_SESSION["password"] = $hash;
 					
-						header('Location: ../MainPage.php');
+						header('Location:' .$_SERVER['HTTP_REFERER']);
+						exit;
 					} else {
 						header('Location: ../signIn.html?error=Неверный логин или парол');
 					}

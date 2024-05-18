@@ -41,7 +41,8 @@
 					// $_SESSION["login_user"] = $login;
 					$_SESSION["username"] = $row[2];
 					$_SESSION["password"] = $hash;
-					header('Location: ../MainPage.php');
+					header('Location:' . $_SERVER['HTTP_REFERER']);
+					exit;
 				}	
 			}
 		} else {

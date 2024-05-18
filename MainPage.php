@@ -34,19 +34,19 @@
                         <div class="collapse navbar-collapse menu__body" id="navbarSupportedContent">
                             <ul class="navbar-nav mx-auto menu__list">
                                 <li class="nav-item">
-                                    <a class=" menu__link" aria-current="page" href="t_shirt.php">Футболки
+                                    <a class=" menu__link" aria-current="page" href="t_shirt.php?cat=<?php echo 1 ?>">Футболки
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="menu__link" aria-current="page" href="{% url 'hoody' %}"> кофты
+                                    <a class="menu__link" aria-current="page" href="t_shirt.php?cat=<?php echo 2 ?>"> кофты
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class=" menu__link" aria-current="page" href="{% url 'other' %}"> комплекты
+                                    <a class=" menu__link" aria-current="page" href="t_shirt.php?cat=<?php echo 3 ?>"> комплекты
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class=" menu__link" aria-current="page" href="#"> прочее
+                                    <a class=" menu__link" aria-current="page" href="t_shirt.php?cat=<?php echo 4 ?>"> прочее
                                     </a>
                                 </li>
                                 <!-- {% if request.user.is_authenticated %}
@@ -141,7 +141,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div> 
     <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
