@@ -1,9 +1,10 @@
 <?php
-	function getItem($id,$conn) {		
+	function getImages($item) {		
+		$conn = require_once __DIR__ . '/../DbConnect.php';
 		if ($conn == null) {
 			header('Location: signIn.html?error=Ошибка при подключении');
 		} else {
-			$selectResult= pg_query($conn, "SELECT product_id,name,description,price FROM products WHERE product_id='".$id."';");
+			$selectResult = pg_query($conn, "SELECT img_url WHERE product_id ='".$item."';");
 			if (!$selectResult) {
 				header('Location: ../MainPage.php');
 				echo "Ошибка";

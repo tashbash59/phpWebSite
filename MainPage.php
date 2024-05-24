@@ -49,31 +49,22 @@
                                     <a class=" menu__link" aria-current="page" href="t_shirt.php?cat=<?php echo 4 ?>"> прочее
                                     </a>
                                 </li>
-                                <!-- {% if request.user.is_authenticated %}
-                                {% if request.user.is_superuser %}
-                                <li class="nav-item ">
-                                    <a class=" menu__link" aria-current="page" href="{% url 'admin' %}"> администрация
-                                    </a>
-                                </li>
-                                {% endif %}
-                                <li class="nav-item">
-                                    <a class=" menu__link" aria-current="page" href="{% url 'bag' %}"> корзина
-                                    </a>
-                                <li class="nav-item ">
-                                    <a class=" menu__link " aria-current="page" href="">
-                                        Личный кабинет
-                                    </a>
-                                </li>
-                                </li>
-                                <li class="nav-item">
-                                    <a class=" menu__link" aria-current="page" href="{% url 'logout' %}"> выход
-                                    </a>
-                                </li> -->
-                                <!-- {% else %} -->
                                 <?php
                                     session_start();
                                     if (isset($_SESSION['user_id'])) {
+                                        if($_SESSION['role'] == 2) {
+                                            echo <<<HTML
+                                            <li class="nav-item ">
+                                                <a class=" menu__link" aria-current="page" href="admin\AdminMain.php"> Администрирование
+                                                </a>
+                                            </li>
+                                        HTML;
+                                        }
                                         echo <<<HTML
+                                            <li class="nav-item ">
+                                                <a class=" menu__link" aria-current="page" href="cart.php"> корзина
+                                                </a>
+                                            </li>
                                             <li class="nav-item ">
                                                 <a class=" menu__link" aria-current="page" href="scripts\logout.php"> выход
                                                 </a>
@@ -109,9 +100,6 @@
                 </div>
             </div>
         </div>
-    </main>
-
-<!--      Modal -->
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
         tabindex="-1">
         <div class="modal-dialog  right">
@@ -120,7 +108,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="./scripts/signIn.php" class="modal-body" method="POST">
-                  <!--   {% csrf_token %} -->
                     <div class="modal-body__Mail mb-3">
                         <div class="modal-body__MailTitle">ИМЯ ПОЛЬЗОВАТЕЛЯ</div>
                         <input type="text" class="modal-body__MailInput w-100" name="login" id="login">
@@ -129,6 +116,11 @@
                         <div class="modal-body__PasswordTitle">ПАРОЛЬ</div>
                         <input type="Password" class="modal-body__PasswordInput w-100" name="password">
                     </div>
+                    <?php 
+                        if (!empty($_GET['error'])) {
+                            echo "<div class=\"modal-body__MailTitle\">{$_GET['error']}</div>" ;
+                        }
+                    ?>
                     <div class="modal-body__SignIn text-center">
                         <button class="modal-body__SignInBtn">ВОЙТИ</button>
                     </div>
@@ -151,14 +143,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="./scripts/signUp.php" class="modal-body" method="POST">
-                    <!-- {% csrf_token %} -->
                     <div class="modal-body__title text-center mb-3">
                         <h5 class="modal-title" id="exampleModalToggleLabel2">Регистрация</h5>
                     </div>
                     <div class="modal-body__Mail mb-3">
                         <div class="modal-body__MailTitle">ИМЯ ПОЛЬЗОВАТЕЛЯ</div>
                         <input type="text" class="modal-body__MailInput w-100" name="login" id="login">
-                        <!-- {{ form.username }} -->
                     </div>
         <!--             <div class="modal-body__Mail mb-3">
                         <div class="modal-body__MailTitle">ЭЛ. ПОЧТА</div>
@@ -166,12 +156,11 @@
                     <div class="modal-body__Password mb-3">
                         <div class="modal-body__PasswordTitle">ПАРОЛЬ</div>
                         <input type="Password" class="modal-body__PasswordInput w-100" name="password">
-                        <!-- {{ form.password1 }} -->
                     </div>
                  <!--    <div class="modal-body__Password mb-5">
                         <div class="modal-body__PasswordTitle">подтвердите пароль</div>
                     </div> -->
-                    <!-- {{ form.errors }} -->
+
                     <div class="modal-body__SignIn  text-center">
                         <button class="modal-body__SignInBtn fz20" name="reg">зарегистрироваться</button>
                     </div>

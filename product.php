@@ -52,7 +52,19 @@
                                 <?php
                                     session_start();
                                     if (isset($_SESSION['user_id'])) {
+                                        if($_SESSION['role'] == 2) {
+                                            echo <<<HTML
+                                            <li class="nav-item ">
+                                                <a class=" menu__link" aria-current="page" href="admin\AdminMain.php"> Администрирование
+                                                </a>
+                                            </li>
+                                        HTML;
+                                        }
                                         echo <<<HTML
+                                            <li class="nav-item ">
+                                                <a class=" menu__link" aria-current="page" href="cart.php"> корзина
+                                                </a>
+                                            </li>
                                             <li class="nav-item ">
                                                 <a class=" menu__link" aria-current="page" href="scripts\logout.php"> выход
                                                 </a>
@@ -79,21 +91,34 @@
             <?php 
                 $item_id = $_GET['id'];
                 require __DIR__ . '/scripts/getCurentProduct.php'; 
-                $resultList = getItem($item_id);
+                $conn = require_once __DIR__ . '/DbConnect.php'; 
+                $resultList = getItem($item_id,$conn);
                 echo <<<HTML
                     <div class="Product__title container">
                         <h2 class="col-12 text-center">$resultList[1]</h2>
                     </div>
                 HTML; 
             ?>
-            <form class="Product__body container">
+            <form class="Product__body container" action="../scripts/addProduct.php" method="POST">
                 <div class="row">
-                    <div class="col-lg-6 col-md-12 Product__image">
-                        <img src="<?php echo "$resultList[3]"?>" class="img-fluid product-img" alt="">
+                    <div class="col-lg-6">
+                    <?php 
+                        require __DIR__ . '/scripts/getProduct.php';
+                        $img = getAllImg($item_id,$conn);
+                        foreach ($img as $i){
+                            echo <<< HTML
+                            
+                                <div class="col-lg-12 col-md-12 Product__image">
+                                    <img src="{$i['img_url']}" class="img-fluid product-img" alt="">
+                                </div>
+                          
+                            HTML;
+                        }
+                    ?>
                     </div>
                     <div class="col-lg-6 col-md-12 Product__text info">
                         <div class="info__price text-center">
-                            <span><?php echo "$resultList[4]"?></span>
+                            <span><?php echo "$resultList[3]"?></span>
                         </div>
                         <div class="info__description">
                             <?php echo "$resultList[2]"?>
@@ -130,19 +155,20 @@
                                 <div class="modal__count ">
                                     <div class="modal__title1 text-center mb-5 product-title" id="exampleModalLabel"><?php echo "$resultList[1]"?></div>
                                     <div class="modal__title ">Количество товара</div>
-                                    <input type="number" min="1" value="1" class="items-in-box">
+                                    <input type="number" min="1" value="1" class="items-in-box" name="quantity">
                                 </div>
                                 <div class="modal__size text-center">
-                                    <select class="choise" name="" id="">
-                                        <option value="">S</option>
-                                        <option value="">M</option>
-                                        <option value="">L</option>
+                                    <select class="choise" name="size" id="">
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
                                     </select>
                                 </div>
+                                <input type="hidden" name="product_id" value = "<?php echo htmlspecialchars($item_id);?>">
                             </div>
                             <div class="modal-footer mx-auto">
                                 <button type="button" class="btn knop1" data-bs-dismiss="modal">Закрыть</button>
-                                <button data-cart type="button" class="btn knop2">Добавить в корзину</button>
+                                <button type="submit" data-cart type="button" class="btn knop2">Добавить в корзину</button>
                             </div>
                         </div>
                     </div>
@@ -272,7 +298,6 @@
                     <div class="modal-body__Mail mb-3">
                         <div class="modal-body__MailTitle">ИМЯ ПОЛЬЗОВАТЕЛЯ</div>
                         <input type="text" class="modal-body__MailInput w-100" name="login" id="login">
-                        <!-- {{ form.username }} -->
                     </div>
         <!--             <div class="modal-body__Mail mb-3">
                         <div class="modal-body__MailTitle">ЭЛ. ПОЧТА</div>
@@ -285,7 +310,6 @@
                  <!--    <div class="modal-body__Password mb-5">
                         <div class="modal-body__PasswordTitle">подтвердите пароль</div>
                     </div> -->
-                    <!-- {{ form.errors }} -->
                     <div class="modal-body__SignIn  text-center">
                         <button class="modal-body__SignInBtn fz20" name="reg">зарегистрироваться</button>
                     </div>

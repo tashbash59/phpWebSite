@@ -26,10 +26,10 @@
 						header('Location:' .$_SERVER['HTTP_REFERER']);
 						exit;
 					} else {
-						header('Location: ../signIn.html?error=Неверный логин или парол');
+						header('Location: ../MainPage.php?error=Неверный логин или пароль/');
 					}
 				} else {
-					header('Location: ../signIn.html?error=Неверный логин');
+					header('Location: ../MainPage.php?error=Неверный логин');
 				}
 			}
 		} else {
