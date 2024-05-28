@@ -147,6 +147,9 @@
                         <a href="AdminProduct.php">Добавить товар +</a>
                     </div>
                 </div>
+                    <div class="link__container text-center">
+                        <a href="date.php">Просмотреть заказы</a>
+                    </div>
                 
             </div>
         </div>
